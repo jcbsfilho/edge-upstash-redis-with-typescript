@@ -1,8 +1,6 @@
-# Getting starded with Next.js Azion Edge Application with Upstash
+# Getting starded Azion Edge Application with Upstash
 
-## Getting Started with Next.js, Azion and Upstash Redis
-
-Edge Next.js template that will show a custom greeting depending on the location of the customer. We will upload the greeting message from Upstash Redis.
+Edge template that will show a custom greeting depending on the location of the customer. We will upload the greeting message from Upstash Redis.
 
 ## *1* - Create Account Azion
 
@@ -47,7 +45,7 @@ OK
 
 *Build and Application [choose a template](https://manager.azion.com/build-application/build/choose-template)*
 
-Choose **Edge Application Upstash Greetings** template
+Choose **Edge Application Upstash With Typescript** template
 
 Generate your personal github token:
 
