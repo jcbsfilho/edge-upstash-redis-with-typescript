@@ -21,7 +21,23 @@ interface CustomRequest extends Request {
 
 async function handleRequest(request: CustomRequest, args: Args) {
   const method = request.method;
-  const country = request?.metadata["geoip_country_code"] || "US";
+  const country = request?.metadata["geoip_country_code"];
+
+  const pathname = new URL(request.url).pathname;
+
+  if (pathname !== "/hello") {
+    return new Response(
+      JSON.stringify({
+        message: "got to /hello",
+      }),
+      {
+        status: 404,
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
+  }
 
   if (!methodRouter[method]) {
     return new Response(
