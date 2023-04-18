@@ -1,5 +1,5 @@
 import { Request, Response } from "node-fetch";
-import { MethodRouterRedis, redisGet } from "../lib/upstash-redis";
+import { redisGet } from "../lib/upstash-redis";
 
 export interface Args {
   UPSTASH_REDIS_REST_URL: string;
@@ -25,6 +25,21 @@ async function handleRequest(request: CustomRequest, args: Args) {
 
   const pathname = new URL(request.url).pathname;
 
+  if (method !== 'GET') {
+    return new Response(
+      JSON.stringify({
+        message: "METHOD NOT ALLOWED",
+      }),
+      {
+        status: 404,
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
+  }
+
+  // This is to add an action and in the propagation of the edges do not make requests
   if (pathname !== "/hello") {
     return new Response(
       JSON.stringify({
@@ -39,21 +54,7 @@ async function handleRequest(request: CustomRequest, args: Args) {
     );
   }
 
-  if (!methodRouter[method]) {
-    return new Response(
-      JSON.stringify({
-        message: "METHOD NOT ALLOWED",
-      }),
-      {
-        status: 404,
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    );
-  }
-
-  const { result: resultRedis, status } = await methodRouter[method](country, {
+  const { result: resultRedis, status } = await redisGet(country, {
     url: args?.UPSTASH_REDIS_REST_URL || "",
     token: args?.UPSTASH_REDIS_REST_TOKEN || "",
   });
@@ -67,9 +68,5 @@ async function handleRequest(request: CustomRequest, args: Args) {
     },
   });
 }
-
-const methodRouter: MethodRouterRedis = {
-  GET: redisGet,
-};
 
 export { handleRequest };
