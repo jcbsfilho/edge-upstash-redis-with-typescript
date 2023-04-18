@@ -62,7 +62,7 @@ async function handleRequest(request: CustomRequest, args: Args) {
   const result = resultRedis || `Hello ${country}!`
 
   return new Response(result, {
-    status: status || 500,
+    status: status || 404,
     headers: {
       "content-type": "application/json",
     },
