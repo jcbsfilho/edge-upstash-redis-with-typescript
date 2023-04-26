@@ -6,7 +6,7 @@
     "id": 0,
     "name": "__DEFAULT__",
     "file": "./worker/function.js",
-    "args": "./azion/args.json"
+    "args": "./args.json"
   },
   "application": {
     "id": 0,
